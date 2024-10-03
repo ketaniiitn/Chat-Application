@@ -9,7 +9,6 @@ body {
     background-position: top center; /* Positions the image towards the top */
     background-attachment: fixed;
 }
-/* dark mode looking scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
   }
@@ -27,4 +26,4 @@ body {
     background: #242424;
   }
   
-/*  linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),  */
+ 

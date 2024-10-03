@@ -1,5 +1,4 @@
 import React from 'react';
-
 const Message = () => {
   return (
     <div className='chat chat-end'>
@@ -17,5 +16,4 @@ const Message = () => {
     </div>
   );
 };
-
 export default Message;
