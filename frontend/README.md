@@ -1,8 +1,40 @@
-# React + Vite
+# 📩 Chat Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern real-time chat application with a sleek and intuitive UI, featuring user authentication, online status, and instant messaging.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication**: Secure login/signup using email and password.
+- **Real-Time Messaging**: Send and receive messages instantly.
+- **Online User Status**: View a list of active users.
+- **Modern UI**: Clean and responsive interface with dark mode.
+- **Efficient State Management**: Optimized performance for seamless user experience.
+
+## 🖼️ Screenshots
+
+### Login Screen
+![Login Screen](SignIn.jpg)
+
+### Signup Screen
+![Signup Screen](SignUp.jpg)
+
+### Chat Interface
+![Chat Interface](Chat.jpg)
+
+
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, TailwindCSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Real-Time Communication**: Socket.io
+
+## 📦 Installation
+
+```sh
+git clone https://github.com/your-username/chat-app.git
+cd chat-app
+npm install
+## ▶️ Usage
+node backend/server.js

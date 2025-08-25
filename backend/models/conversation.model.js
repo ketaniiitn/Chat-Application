@@ -1,18 +1,45 @@
 import mongoose from "mongoose";
+
 const conversationSchema = new mongoose.Schema({
-    participant:[
+    participant: [
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User",
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
         }
     ],
-    messages:[
+    messages: [
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Message",
-            default:[],
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Message",
+            default: [],
         }
     ]
-},{timestamp:true});
+}, { timestamps: true }); 
+
 const Conversation = mongoose.model("Conversation", conversationSchema);
+
 export default Conversation;
+
+
+
+
+
+
+// import mongoose from "mongoose";
+// const conversationSchema = new mongoose.Schema({
+//     participant:[
+//         {
+//             type:mongoose.Schema.Types.ObjectId,
+//             ref:"User",
+//         }
+//     ],
+//     messages:[
+//         {
+//             type:mongoose.Schema.Types.ObjectId,
+//             ref:"Message",
+//             default:[],
+//         }
+//     ]
+// },{timestamp:true});
+// const Conversation = mongoose.model("Conversation", conversationSchema);
+// export default Conversation;

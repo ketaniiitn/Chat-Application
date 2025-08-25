@@ -2,12 +2,11 @@ import { createContext, useState, useEffect ,useContext} from "react";
 import io from "socket.io-client"
 import { useAuthContext } from "./AuthContext";
 
-// Create Socket Context
 const SocketContext = createContext();
 export const useSocketContext = ()=> {
     return useContext(SocketContext);
 }
-// Socket Context Provider Component
+
 export const SocketContextProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
@@ -15,14 +14,14 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            const socket = io("https://localhost:8000",{
+            const socket = io("http://localhost:8000",{
                query:{
                 userId:authUser._id,
 
                },
             });
             setSocket(socket);
-            //socket.on is used to listen to the events. can be used both on client and server side
+            
             socket.on("getOnlineUsers", (users) => {
                 setOnlineUsers(users);
             });
