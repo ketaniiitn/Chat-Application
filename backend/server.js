@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 
 import authRoutes from './routes/auth.routes.js';
@@ -17,6 +19,19 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json()); 
 app.use(cookieParser());
+
+// --------- DEPLOYMENT (serve frontend build in production) ---------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === 'production') {
+    const distPath = path.join(__dirname, '../frontend/dist');
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(distPath, 'index.html'));
+    });
+}
+// --------- DEPLOYMENT ---------
 
 // Routes
 
