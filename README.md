@@ -91,7 +91,7 @@ cd ..
 Create a `.env` file in the root directory and add the following variables:
 
 ```env
-PORT=5000
+PORT=8000
 MONGO_DB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 NODE_ENV=development
@@ -99,7 +99,7 @@ NODE_ENV=development
 
 **Example:**
 ```env
-PORT=5000
+PORT=8000
 MONGO_DB_URI=mongodb://localhost:27017/chatapp
 JWT_SECRET=mysecretjwtkey123456789
 NODE_ENV=development
@@ -262,7 +262,9 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-**Developer:** [Ketan Bajpai]
+**Developer:** Ketan Bajpai
+**Email:** ketanbajpai980@gmail.com
+**LinkedIn:** [@ketaniiitn](https://github.com/ketaniiitn)
 **GitHub:** [@ketaniiitn](https://github.com/ketaniiitn)
 **Project Link:** [https://github.com/ketaniiitn/Chat-Application](https://github.com/ketaniiitn/Chat-Application)
 
