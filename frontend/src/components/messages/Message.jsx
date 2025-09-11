@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import useConversation from '../../zustand/useConversation';
-import extractTime from '../../utils/extracttime';
+import { extractTime } from '../../utils/extracttime';
 import { apiUrl } from '../../utils/api';
 
 const Message = ({ message }) => {
