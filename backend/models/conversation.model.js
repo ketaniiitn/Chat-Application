@@ -13,7 +13,21 @@ const conversationSchema = new mongoose.Schema({
             ref: "Message",
             default: [],
         }
-    ]
+    ],
+    status: {
+        type: String,
+        enum: ["pending", "accepted", "blocked"],
+        default: "pending"
+    },
+    initiator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    blockedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null
+    }
 }, { timestamps: true }); 
 
 const Conversation = mongoose.model("Conversation", conversationSchema);

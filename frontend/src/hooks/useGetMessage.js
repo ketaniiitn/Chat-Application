@@ -8,7 +8,8 @@ const useGetMessage = () => {
     const getMessages = async () =>{
       setLoading(true);
       try {
-        const res = await fetch(`/api/messages/${selectedConversation._id}`);
+  // Backend get messages endpoint expects the other participant userId
+  const res = await fetch(`/api/messages/${selectedConversation.userId || selectedConversation._id}`);
         const data = await res.json();
         if(data.error) throw new Error(data.error);
         setMessages(data);
@@ -18,8 +19,8 @@ const useGetMessage = () => {
         setLoading(false);
       }
     };
-    if(selectedConversation ?._id) getMessages();
-  },[selectedConversation?._id, setMessages]);
+    if(selectedConversation?.userId || selectedConversation?._id) getMessages();
+  },[selectedConversation?.userId, selectedConversation?._id, setMessages]);
   return {messages, loading};
 }
 

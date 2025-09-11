@@ -1,16 +1,20 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  fullName: {
+  firstName: {
     type: String,
     required: true,
-    trim: true
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   username: {
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    lowercase: true,
   },
   password: {
     type: String,
@@ -30,7 +34,13 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
     default: "",
-  }
+  },
+  blockedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

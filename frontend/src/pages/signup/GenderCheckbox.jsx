@@ -6,7 +6,7 @@ const GenderCheckbox = ({onCheckboxChange,selectedGender}) => {
   return (
     <div className='flex flex-col mt-2'>
       <label className='label cursor-pointer ${selectedGender === "male" ? "selected":""}'>
-        <span className='label-text text-black text-sm'>Select Your Gender</span>
+        <span className='label-text text-white text-sm'>Select Your Gender</span>
       </label>
       <div className='flex items-center space-x-4'>
         <div className='flex items-center'>

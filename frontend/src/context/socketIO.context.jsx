@@ -25,6 +25,14 @@ export const SocketContextProvider = ({ children }) => {
             socket.on("getOnlineUsers", (users) => {
                 setOnlineUsers(users);
             });
+            // New user created broadcast -> dispatch custom event
+            socket.on("user:created", (user)=>{
+                window.dispatchEvent(new CustomEvent('app:userCreated',{detail:user}));
+            });
+            // Conversation status updated
+            socket.on("conversation:updated", (data)=>{
+                window.dispatchEvent(new CustomEvent('app:conversationUpdated',{detail:data}));
+            });
             return () => socket.close();
         }else{
             if(socket){
