@@ -20,16 +20,16 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json()); 
 app.use(cookieParser());
 
-// --------- DEPLOYMENT (serve frontend build in production) ---------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-if (process.env.NODE_ENV === 'production') {
-    const distPath = path.join(__dirname, '../frontend/dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(distPath, 'index.html'));
-    });
+// --------- DEPLOYMENT ---------
+const path = require("path");
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+	});
 }
 // --------- DEPLOYMENT ---------
 
