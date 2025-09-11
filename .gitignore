@@ -17,6 +17,8 @@ dist/
 dist-ssr/
 frontend/dist/
 backend/dist/
+build/
+out/
 
 # Local environment files
 .env
@@ -37,3 +39,20 @@ backend/dist/
 # Optional cache
 .cache/
 .tmp/
+.next/
+.nuxt/
+coverage/
+*.tsbuildinfo
+
+# Package manager locks (optional - only if you want to keep one source of truth)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Docker / Containers
+.docker/
+docker-compose.override.yml
+
+# Misc
+Thumbs.db
+*.iml
