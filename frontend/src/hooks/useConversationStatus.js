@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { apiUrl } from '../utils/api';
 import useConversation from '../zustand/useConversation';
 
 const useConversationStatus = () => {
@@ -13,14 +15,15 @@ const useConversationStatus = () => {
     setError(null);
     try {
       if(!conversationId) throw new Error("No conversation to accept");
-      const res = await fetch(`/api/conversations/accept/${conversationId}`, {
-        method: 'POST',
+      const res = await fetch(apiUrl(`/api/conversations/accept/${conversationId}`), {
+        method: 'PATCH',
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setSelectedConversation({ ...selectedConversation, status: 'accepted' });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -32,14 +35,15 @@ const useConversationStatus = () => {
     setError(null);
     try {
       if(!conversationId) throw new Error("No conversation to block");
-      const res = await fetch(`/api/conversations/block/${conversationId}`, {
-        method: 'POST',
+      const res = await fetch(apiUrl(`/api/conversations/block/${conversationId}`), {
+        method: 'PATCH',
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setSelectedConversation({ ...selectedConversation, status: 'blocked', blockedBy: 'me' });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -51,14 +55,15 @@ const useConversationStatus = () => {
     setError(null);
     try {
       if(!conversationId) throw new Error("No conversation to unblock");
-      const res = await fetch(`/api/conversations/unblock/${conversationId}`, {
-        method: 'POST',
+      const res = await fetch(apiUrl(`/api/conversations/unblock/${conversationId}`), {
+        method: 'PATCH',
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setSelectedConversation({ ...selectedConversation, status: 'accepted', blockedBy: null });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }

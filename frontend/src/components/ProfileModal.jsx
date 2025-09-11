@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { apiUrl } from '../utils/api';
 
 const ProfileModal = ({ isOpen, onClose }) => {
   const { authUser, setAuthUser } = useAuthContext();
@@ -31,7 +32,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (tab === 'blocked') {
-      fetch('/api/conversations/blocked')
+      fetch(apiUrl('/api/conversations/blocked'))
         .then(res => res.json())
         .then(data => setBlockedUsers(data));
     }
@@ -49,7 +50,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setMsg('');
     try {
-      const res = await fetch('/api/user/update', {
+      const res = await fetch(apiUrl('/api/user/update'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -70,7 +71,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     setLoading(true);
     setMsg('');
     try {
-      const res = await fetch('/api/user/password', {
+      const res = await fetch(apiUrl('/api/user/password'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(passwords),

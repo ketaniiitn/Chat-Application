@@ -1,16 +1,17 @@
 import { useState } from "react";
 import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
+import { apiUrl } from "../utils/api";
 
 const useSendMessage = () => {
 	const [loading, setLoading] = useState(false);
-	const { messages, setMessages, selectedConversation } = useConversation();
+	const { selectedConversation, setMessages } = useConversation();
 
 	const sendMessage = async (message) => {
+		if (!selectedConversation) return;
 		setLoading(true);
 		try {
-			// Use other participant userId when sending (backend expects receiver user id)
-			const res = await fetch(`/api/messages/send/${selectedConversation.userId || selectedConversation._id}`, {
+			const res = await fetch(apiUrl(`/api/messages/send/${selectedConversation.userId || selectedConversation._id}`), {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -19,8 +20,7 @@ const useSendMessage = () => {
 			});
 			const data = await res.json();
 			if (data.error) throw new Error(data.error);
-
-			setMessages([...messages, data]);
+			setMessages((prev) => [...prev, data]);
 		} catch (error) {
 			toast.error(error.message);
 		} finally {
@@ -30,4 +30,5 @@ const useSendMessage = () => {
 
 	return { sendMessage, loading };
 };
+
 export default useSendMessage;

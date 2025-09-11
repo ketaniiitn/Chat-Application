@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import useConversation from '../../zustand/useConversation';
-import { extracttime } from '../../utils/extracttime';
-import { FaTrash } from 'react-icons/fa';
-import toast from 'react-hot-toast';
+import extractTime from '../../utils/extracttime';
+import { apiUrl } from '../../utils/api';
 
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
-  const { selectedConversation, messages, setMessages } = useConversation();
+  const { selectedConversation, setMessages } = useConversation();
+  const lastMessageRef = useRef();
   const fromMe = message.senderId === authUser._id;
-  const formattedTime = extracttime(message.createdAt);
+  const formattedTime = extractTime(message.createdAt);
+  const shakeClass = message.shouldShake ? 'shake' : '';
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [message]);
+
+  useEffect(() => {
+    if (!message.read && !fromMe) {
+      (async () => {
+        try {
+          const res = await fetch(apiUrl(`/api/messages/message/${message._id}`), {
+            method: 'PATCH',
+          });
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          setMessages((prev) => prev.map((m) => (m._id === message._id ? { ...m, read: true } : m)));
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [message._id]);
+
   const chatClassName = fromMe ? 'chat-end' : 'chat-start';
   const profilePic = fromMe ? authUser.profilePic : selectedConversation.profilePic;
   const bubblebgColor = fromMe ? ' bg-[#00a884]' : ' bg-[#202c33]';
-  const shakeClass = message.shouldShake ? "shake" : "";
-
-  const handleDelete = async () => {
-    try {
-      const res = await fetch(`/api/messages/message/${message._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      setMessages(messages.filter(m => m._id !== message._id));
-      toast.success('Message deleted');
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
 
   return (
-    <div className={`chat ${chatClassName}`}>
+    <div ref={lastMessageRef} className={`chat ${chatClassName} ${shakeClass}`}>
       <div className='chat-image avatar'>
         <div className='w-10 rounded-full'>
           <img
@@ -39,21 +47,14 @@ const Message = ({ message }) => {
           />
         </div>
       </div>
-
-  <div className={`chat-bubble text-[#e9edef] ${bubblebgColor} ${shakeClass} pb-2 border border-[#2a3942]`}> 
+      <div className={`chat-bubble text-[#e9edef] ${bubblebgColor} pb-2 border border-[#2a3942]`}>
         {message.message}
-        {fromMe && (
-          <button
-            className="ml-2 text-xs text-red-300 hover:text-red-500"
-            title="Delete message"
-            onClick={handleDelete}
-          >
-            <FaTrash />
-          </button>
-        )}
       </div>
-      <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
+      <div className='chat-footer opacity-50 text-xs flex gap-1 items-center mt-1'>
+        {formattedTime}
+      </div>
     </div>
   );
 };
+
 export default Message;

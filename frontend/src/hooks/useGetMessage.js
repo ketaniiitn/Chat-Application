@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import useConversation from "../zustand/useConversation";
+import toast from 'react-hot-toast';
+import { apiUrl } from '../utils/api';
+
 const useGetMessage = () => {
   const [loading,setLoading]=useState(false);
   const {messages, setMessages, selectedConversation } = useConversation();
@@ -8,8 +11,8 @@ const useGetMessage = () => {
     const getMessages = async () =>{
       setLoading(true);
       try {
-  // Backend get messages endpoint expects the other participant userId
-  const res = await fetch(`/api/messages/${selectedConversation.userId || selectedConversation._id}`);
+        if (!selectedConversation) return;
+        const res = await fetch(apiUrl(`/api/messages/${selectedConversation.userId || selectedConversation._id}`));
         const data = await res.json();
         if(data.error) throw new Error(data.error);
         setMessages(data);
@@ -19,8 +22,8 @@ const useGetMessage = () => {
         setLoading(false);
       }
     };
-    if(selectedConversation?.userId || selectedConversation?._id) getMessages();
-  },[selectedConversation?.userId, selectedConversation?._id, setMessages]);
+    getMessages();
+  },[selectedConversation, setMessages]);
   return {messages, loading};
 }
 

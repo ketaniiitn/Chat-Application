@@ -8,6 +8,7 @@ import useConversationStatus from '../../hooks/useConversationStatus';
 import useConversation from '../../zustand/useConversation';
 import useListenMessages from '../../hooks/useListenMessages'; // Import the new hook
 import { useAuthContext } from '../../context/AuthContext';
+import { apiUrl } from '../../utils/api';
 
 function NoChatSelected() {
   const { authUser } = useAuthContext();
@@ -43,7 +44,7 @@ const MessageContainer = () => {
     if (!otherUserId) return toast.error("Could not delete chat. Participant not found.");
     
     try {
-      const res = await fetch(`/api/messages/chat/${otherUserId}`, {
+      const res = await fetch(apiUrl(`/api/messages/chat/${otherUserId}`), {
         method: 'DELETE',
       });
       const data = await res.json();
